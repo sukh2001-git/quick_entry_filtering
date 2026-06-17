@@ -1,15 +1,11 @@
 console.log("Quick Entry Enhancer Loaded");
 
 (function install_quick_entry_override() {
-	// Guard against double install
 	if (window.quick_entry_framework_loaded) {
 		console.log("[QEE] already installed, skipping");
 		return;
 	}
 
-	// frappe.ui.form.QuickEntryForm is defined once frappe.bundle.js loads.
-	// app_include_js is included after the bundle, so it's available here.
-	// But still wait briefly in case of any race during first load.
 	if (typeof frappe === "undefined" || !frappe.ui || !frappe.ui.form || !frappe.ui.form.QuickEntryForm) {
 		console.log("[QEE] QuickEntryForm not yet defined, waiting...");
 		setTimeout(install_quick_entry_override, 100);

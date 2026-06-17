@@ -22,35 +22,40 @@
   {
    "fieldname": "target_doctype",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Target Doctype",
    "options": "DocType"
   },
   {
    "fieldname": "source_field",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Source Field"
   },
   {
    "fieldname": "lookup_doctype",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Lookup Doctype",
    "options": "DocType"
   },
   {
    "fieldname": "value_field",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Value Field"
   },
   {
    "fieldname": "target_field",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Target Field"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-06-04 18:02:48.064641",
+ "modified": "2026-06-17 13:07:42.562720",
  "modified_by": "Administrator",
  "module": "quick_entry_filtering",
  "name": "Quick Entry Rule",
