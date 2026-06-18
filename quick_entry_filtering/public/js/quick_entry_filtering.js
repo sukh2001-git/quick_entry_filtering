@@ -2,12 +2,10 @@ console.log("Quick Entry Enhancer Loaded");
 
 (function install_quick_entry_override() {
     if (window.quick_entry_framework_loaded) {
-        console.log("[QEE] already installed, skipping");
         return;
     }
 
     if (typeof frappe === "undefined" || !frappe.ui || !frappe.ui.form || !frappe.ui.form.QuickEntryForm) {
-        console.log("[QEE] QuickEntryForm not yet defined, waiting...");
         setTimeout(install_quick_entry_override, 100);
         return;
     }
@@ -20,13 +18,10 @@ console.log("Quick Entry Enhancer Loaded");
         original_render.apply(this, arguments);
         setup_quick_entry_rules(this);
     };
-
-    console.log("[QEE] QuickEntryForm.render_dialog patched");
 })();
 
 
 async function setup_quick_entry_rules(quick_entry) {
-    console.log("[QEE] setup_quick_entry_rules for", quick_entry.doctype);
 
     let r;
     try {
@@ -39,11 +34,8 @@ async function setup_quick_entry_rules(quick_entry) {
         return;
     }
 
-    console.log("[QEE] rules response:", r && r.message);
-
     const rules = (r && r.message) || [];
     if (!rules.length) {
-        console.log("[QEE] no active rules for", quick_entry.doctype);
         return;
     }
 
@@ -52,7 +44,6 @@ async function setup_quick_entry_rules(quick_entry) {
 
 
 function attach_rule(quick_entry, rule) {
-    console.log("[QEE] attaching rule", rule);
 
     const dialog = quick_entry.dialog;
     if (!dialog) {
@@ -90,7 +81,6 @@ function attach_rule(quick_entry, rule) {
 function attach_fetch_rule(dialog, rule, $input) {
     const handler = async function () {
         const value = dialog.get_value(rule.source_field);
-        console.log("[QEE] fetch rule - source change", rule.source_field, "=", value);
 
         if (!value) return;
 
@@ -106,8 +96,6 @@ function attach_fetch_rule(dialog, rule, $input) {
             return;
         }
 
-        console.log("[QEE] get_value result:", res && res.message);
-
         const result = res && res.message && res.message[rule.value_field];
         if (result) {
             dialog.set_value(rule.target_field, result);
@@ -116,15 +104,12 @@ function attach_fetch_rule(dialog, rule, $input) {
 
     $input.on("change.quick_entry_rule", handler);
     $input.on("awesomplete-selectcomplete.quick_entry_rule", handler);
-
-    console.log("[QEE] fetch rule attached for", rule.source_field);
 }
 
 
 function attach_filter_rule(dialog, rule, $input) {
     const handler = function () {
         const value = dialog.get_value(rule.source_field);
-        console.log("[QEE] filter rule - source change", rule.source_field, "=", value);
 
         const target_field = dialog.get_field(rule.target_field);
         if (!target_field) {
@@ -132,17 +117,13 @@ function attach_filter_rule(dialog, rule, $input) {
             return;
         }
 
-        // Clear the target field whenever source changes
         dialog.set_value(rule.target_field, "");
 
         if (!value) {
-            // Remove filter if source is cleared
             target_field.get_query = null;
-            console.log("[QEE] source cleared, filter removed from", rule.target_field);
             return;
         }
 
-        // Apply dynamic filter on the target link field
         target_field.get_query = function () {
             return {
                 filters: {
@@ -150,15 +131,8 @@ function attach_filter_rule(dialog, rule, $input) {
                 }
             };
         };
-
-        console.log(
-            "[QEE] filter applied on", rule.target_field,
-            "where", rule.filter_field, "=", value
-        );
     };
 
     $input.on("change.quick_entry_rule", handler);
     $input.on("awesomplete-selectcomplete.quick_entry_rule", handler);
-
-    console.log("[QEE] filter rule attached for", rule.source_field);
 }

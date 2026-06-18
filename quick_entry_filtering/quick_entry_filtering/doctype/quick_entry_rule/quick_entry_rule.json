@@ -7,10 +7,12 @@
  "field_order": [
   "is_active",
   "target_doctype",
+  "target_field",
   "source_field",
+  "rule_type",
+  "filter_field",
   "lookup_doctype",
-  "value_field",
-  "target_field"
+  "value_field"
  ],
  "fields": [
   {
@@ -33,6 +35,7 @@
    "label": "Source Field"
   },
   {
+   "depends_on": "eval:doc.rule_type === 'fetch'",
    "fieldname": "lookup_doctype",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -40,6 +43,7 @@
    "options": "DocType"
   },
   {
+   "depends_on": "eval:doc.rule_type === 'fetch'",
    "fieldname": "value_field",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -60,17 +64,18 @@
    "options": "fetch\nfilter"
   },
   {
+   "depends_on": "eval:doc.rule_type === 'filter'",
+   "description": "Field name on the Lookup Doctype to filter by (used when Rule Type is 'filter')",
    "fieldname": "filter_field",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Filter Field",
-   "description": "Field name on the Lookup Doctype to filter by (used when Rule Type is 'filter')"
+   "label": "Filter Field"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-06-17 13:07:42.562720",
+ "modified": "2026-06-18 11:01:16.442340",
  "modified_by": "Administrator",
  "module": "quick_entry_filtering",
  "name": "Quick Entry Rule",
