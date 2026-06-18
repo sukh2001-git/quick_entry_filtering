@@ -50,6 +50,21 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Target Field"
+  },
+  {
+   "default": "fetch",
+   "fieldname": "rule_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Rule Type",
+   "options": "fetch\nfilter"
+  },
+  {
+   "fieldname": "filter_field",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Filter Field",
+   "description": "Field name on the Lookup Doctype to filter by (used when Rule Type is 'filter')"
   }
  ],
  "grid_page_length": 50,
